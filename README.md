@@ -1,284 +1,138 @@
 # Arquitectura-Empresarial-Proyecto-Empresa
-
 # Diagnóstico Técnico de Infraestructura  
-## Sistema basado en acceso directo a archivos Excel
+## Sistema basado en Google Drive
 
-
----
-
-## 1. Descripción de la Infraestructura Actual
-
-La infraestructura actual consiste en un único computador desde el cual un usuario accede directamente a múltiples archivos Excel. Estos archivos funcionan como principal fuente de almacenamiento, gestión y procesamiento de datos.
-
-No existe una aplicación intermedia, base de datos centralizada ni servicios en la nube. La operación depende completamente del acceso manual a los archivos.
+<img width="710" height="562" alt="diagram-export-4-16-2026-9_28_27-PM" src="https://github.com/user-attachments/assets/1f0a5c50-baea-4280-bfff-5e0cbbaba820" />
 
 ---
 
-## 2. Identificación de Debilidades y Cuellos de Botella
+## 1. Descripción
 
-### 2.1 Punto único de falla
-El computador representa un único punto de falla. Si este equipo presenta problemas (fallo físico, malware, pérdida), todo el sistema queda inoperativo.
-
-### 2.2 Falta de escalabilidad
-El sistema no permite crecimiento eficiente:
-- No soporta múltiples usuarios concurrentes
-- El manejo de múltiples archivos se vuelve complejo
-- El rendimiento disminuye a medida que crecen los datos
-
-### 2.3 Acceso no controlado
-No existen mecanismos robustos de control de acceso:
-- Cualquier usuario con acceso al equipo puede modificar archivos
-- No hay segmentación de permisos
-
-### 2.4 Falta de concurrencia
-No hay soporte para trabajo simultáneo:
-- Riesgo de sobrescritura de archivos
-- Conflictos entre versiones
-
-### 2.5 Ausencia de trazabilidad
-No se registran cambios:
-- No es posible auditar modificaciones
-- No hay historial confiable de versiones
-
-### 2.6 Riesgos de integridad de datos
-Alta probabilidad de errores manuales:
-- Edición accidental
-- Eliminación de información
-- Inconsistencias entre archivos
-
-### 2.7 Dependencia de procesos manuales
-El sistema depende completamente del usuario:
-- Procesos repetitivos
-- Mayor probabilidad de errores humanos
-- Baja eficiencia operativa
-
-### 2.8 Almacenamiento no seguro
-Los archivos pueden estar en:
-- Disco local
-- USB
-- Correo electrónico
-
-Esto genera riesgos de pérdida o filtración de información.
+El sistema utiliza almacenamiento en la nube mediante Google Drive, accedido desde un computador. Los archivos Excel funcionan como repositorio principal de información.
 
 ---
 
-## 3. Diagnóstico Técnico
+## 2. Debilidades y Cuellos de Botella
 
-El sistema actual presenta una arquitectura altamente limitada, caracterizada por:
+### 2.1 Dependencia de conexión a internet
+Sin conexión no hay acceso al sistema.
 
-- Acoplamiento fuerte entre usuario, computador y datos
-- Ausencia de capas de abstracción (no hay backend ni servicios)
-- Falta de controles de seguridad y gobernanza de datos
+### 2.2 Gestión de permisos compleja
+Errores en configuración pueden generar accesos indebidos.
 
-Desde un punto de vista técnico, se trata de una arquitectura:
+### 2.3 Falta de estructura de datos
+Excel no escala bien para grandes volúmenes o lógica compleja.
 
-- No escalable
-- No resiliente
-- Difícil de mantener
-- Altamente vulnerable
+### 2.4 Dependencia del usuario
+Procesos siguen siendo manuales.
 
-El principal problema radica en el uso de archivos Excel como sistema central, lo cual no está diseñado para soportar operaciones empresariales complejas ni multiusuario.
-
----
-
-## 4. Impacto de las Limitaciones
-
-Las debilidades identificadas pueden generar:
-
-- Interrupciones operativas
-- Pérdida de información crítica
-- Decisiones basadas en datos incorrectos
-- Riesgos de seguridad y cumplimiento
-- Baja productividad
+### 2.5 Seguridad del endpoint
+El computador sigue siendo un punto vulnerable.
 
 ---
 
-## 5. Buenas Prácticas de Arquitectura de Infraestructura
+## 3. Diagnóstico
 
-### 5.1 Arquitectura On-Premise
+La arquitectura actual puede clasificarse como:
 
-Características:
-- Infraestructura local controlada por la organización
-- Mayor control sobre los datos
+- Cloud básica
+- No estructurada
+- Semi-colaborativa
 
-Buenas prácticas:
-- Redundancia de hardware
-- Sistemas de backup automatizados
-- Control de acceso basado en roles
-- Segmentación de red
+Aunque mejora disponibilidad, sigue siendo limitada en:
 
-Limitaciones:
-- Alto costo de mantenimiento
-- Escalabilidad limitada
-
----
-
-### 5.2 Arquitectura Cloud
-
-Características:
-- Infraestructura alojada en proveedores externos
-- Acceso remoto y escalabilidad bajo demanda
-
-Buenas prácticas:
-- Uso de almacenamiento gestionado
-- Control de acceso con identidad y roles (IAM)
-- Backups automáticos y replicación
-- Monitoreo continuo
-
-Ventajas:
-- Alta disponibilidad
 - Escalabilidad
-- Reducción de costos operativos
+- Gobernanza de datos
+- Automatización
 
 ---
 
-### 5.3 Arquitectura Híbrida
+## 4. Buenas Prácticas
 
-Características:
-- Combinación de infraestructura local y en la nube
+### Cloud
+- Uso de IAM (gestión de identidades)
+- Control de accesos
+- Auditoría de actividad
+- Backups
 
-Buenas prácticas:
-- Sincronización segura de datos
-- Separación de cargas críticas
-- Uso de VPN o conexiones seguras
-- Estrategias de recuperación ante desastres
-
-Ventajas:
-- Flexibilidad
-- Balance entre control y escalabilidad
+### Híbrida
+- Copias locales controladas
+- Redundancia
 
 ---
 
-## 6. Recomendaciones
+## 5. Recomendaciones
 
-Para mejorar la infraestructura actual se recomienda:
-
-1. Migrar almacenamiento a la nube  
-   Uso de plataformas seguras con control de acceso
-
-2. Implementar control de versiones  
-   Evitar pérdida de información y conflictos
-
-3. Establecer permisos de acceso  
-   Definir roles y restricciones por usuario
-
-4. Automatizar copias de seguridad  
-   Reducir riesgo de pérdida de datos
-
-5. Evaluar migración a sistema estructurado  
-   Sustituir Excel por base de datos o aplicación
+- Implementar políticas de acceso estrictas
+- Migrar a base de datos si el sistema crece
+- Automatizar procesos
+- Mejorar seguridad del endpoint
 
 ---
 
-## 7. Conclusión
+## 6. Conclusión
 
-La infraestructura actual, basada en un único computador y múltiples archivos Excel, no cumple con los estándares modernos de arquitectura. Presenta múltiples debilidades en términos de disponibilidad, seguridad y escalabilidad.
+El uso de Google Drive representa una mejora significativa en disponibilidad y colaboración, pero no resuelve problemas estructurales del uso de Excel como sistema principal. Se recomienda evolucionar hacia una arquitectura más robusta y controlada.
 
-Se recomienda evolucionar hacia una arquitectura más robusta, preferiblemente basada en soluciones cloud o híbridas, que permitan garantizar la continuidad operativa y la protección de la información.
+---
 
+# Análisis de Seguridad con STRIDE  
+## Sistema basado en Google Drive
 
-
-# Análisis de Seguridad usando STRIDE  
-## Sistema de Procesamiento de Datos basado en Excel
+<img width="2487" height="221" alt="image" src="https://github.com/user-attachments/assets/fe10c952-f894-4200-ba9e-d022c07f1ef9" />
 
 ---
 
 ## 1. Introducción
 
-El sistema actual se basa en el uso de un computador que accede directamente a múltiples archivos Excel como fuente principal de almacenamiento y procesamiento de información. Este enfoque, aunque funcional, carece de controles de seguridad estructurados, lo que lo hace vulnerable a múltiples amenazas.
+El sistema actual utiliza Google Drive como plataforma de almacenamiento centralizado para archivos Excel, accesibles desde un computador por parte de los usuarios. Este enfoque mejora la disponibilidad y colaboración respecto a un sistema local, pero introduce nuevos riesgos relacionados con accesos, compartición y gestión de identidades.
 
 ---
 
-## 2. Metodología
+## 2. Cambios Clave respecto al sistema anterior
 
-Se utilizó el modelo de amenazas STRIDE, el cual clasifica los riesgos en las siguientes categorías:
-
-- Spoofing (suplantación de identidad)  
-- Tampering (alteración de datos)  
-- Repudiation (repudio de acciones)  
-- Information Disclosure (exposición de información)  
-- Denial of Service (denegación de servicio)  
-- Elevation of Privilege (elevación de privilegios)  
-
-Este modelo permite identificar vulnerabilidades desde diferentes perspectivas de seguridad.
+- Eliminación del punto único de falla local
+- Introducción de acceso remoto
+- Soporte para colaboración
+- Dependencia de credenciales y configuración de permisos
 
 ---
 
-## 3. Tabla de Análisis de Amenazas
+## 3. Principales Riesgos
 
-<img width="2487" height="221" alt="image" src="https://github.com/user-attachments/assets/320a9652-e9d2-4e7d-a66d-fe96470e0df1" />
+### Acceso no autorizado
+El robo de credenciales permite acceso completo al sistema.
 
-## 4. Análisis de Riesgos
+### Exposición de información
+El uso de enlaces públicos puede generar filtraciones críticas.
 
-El análisis evidencia que la mayoría de las amenazas presentan una alta probabilidad de ocurrencia, principalmente debido a la ausencia de controles formales. Se identifican riesgos críticos en:
+### Permisos mal configurados
+Usuarios con más privilegios de los necesarios pueden modificar información sensible.
 
-- Exposición de información sensible  
-- Modificación no controlada de datos  
-- Falta de trazabilidad  
-
-El sistema presenta una alta dependencia de procesos manuales, lo que incrementa la vulnerabilidad.
-
----
-
-## 5. Principales Vulnerabilidades
-
-1. Ausencia de control de acceso  
-   Cualquier usuario puede acceder o modificar los archivos.
-
-2. Falta de trazabilidad  
-   No es posible identificar quién realizó cambios.
-
-3. Almacenamiento inseguro  
-   Los archivos pueden ser copiados o compartidos sin restricciones.
-
-4. Punto único de falla  
-   Dependencia de un solo equipo para la operación.
+### Dependencia del endpoint
+Aunque los datos están en la nube, el acceso depende de la seguridad del computador.
 
 ---
 
-## 6. Controles Recomendados
+## 4. Fortalezas del sistema
 
-### Seguridad de acceso
-- Implementar autenticación fuerte  
-- Definir permisos por usuario  
-
-### Protección de datos
-- Encriptar archivos  
-- Utilizar almacenamiento seguro en la nube  
-
-### Auditoría
-- Implementar versionado de archivos  
-- Registrar cambios realizados  
-
-### Disponibilidad
-- Realizar copias de seguridad automáticas  
-- Implementar redundancia de almacenamiento  
-
-### Integridad
-- Validar datos en Excel  
-- Proteger celdas críticas  
+- Alta disponibilidad
+- Versionado automático
+- Acceso remoto
+- Reducción de pérdida física de datos
 
 ---
 
-## 7. Buenas Prácticas por Sector
+## 5. Controles Recomendados
 
-### Educación
-- Control de acceso a información académica  
-- Protección de datos personales de estudiantes  
-- Uso de plataformas centralizadas  
-
-### Salud
-- Encriptación de datos sensibles  
-- Acceso basado en roles  
-- Cumplimiento de normativas de privacidad  
-
-### Logística
-- Trazabilidad de operaciones  
-- Integridad de datos  
-- Centralización de la información  
+- Implementar autenticación multifactor (MFA)
+- Aplicar principio de mínimo privilegio
+- Restringir compartición por enlaces públicos
+- Auditar accesos y actividades
+- Capacitar a usuarios en uso seguro
 
 ---
 
-## 8. Conclusión
+## 6. Conclusión
 
-El uso de archivos Excel como sistema principal sin controles de seguridad representa un riesgo significativo. Se recomienda evolucionar hacia una solución que incluya control de acceso, auditoría y centralización de la información, con el fin de garantizar la seguridad, integridad y disponibilidad de los datos.
+El uso de Google Drive mejora significativamente la arquitectura respecto a un sistema local, pero introduce riesgos asociados a la gestión de accesos y compartición. La seguridad depende principalmente de la configuración adecuada de permisos y del control de identidad.
