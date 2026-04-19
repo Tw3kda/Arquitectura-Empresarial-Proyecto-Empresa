@@ -7,7 +7,7 @@
 
 ## 1. Descripción
 
-El sistema utiliza almacenamiento en la nube mediante Google Drive, accedido desde un computador. Los archivos Excel funcionan como repositorio principal de información.
+El sistema utiliza almacenamiento en la nube mediante Google Drive, accedido desde un computador. Los archivos Excel funcionan como repositorio principal de información financiera y contable.
 
 ---
 
