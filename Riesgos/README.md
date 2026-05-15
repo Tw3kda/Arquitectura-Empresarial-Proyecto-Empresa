@@ -15,25 +15,20 @@ La arquitectura actual de **ACR VITAL LABORAL SAS** se clasifica como una **Clou
 
 ---
 
-## 2. Análisis de Riesgos por Dominios
+### Matriz de Riesgos de Arquitectura Empresarial 
 
-Siguiendo la **Guía Metodológica**, se identifican los siguientes riesgos estructurales:
-
-### A. Riesgos de Negocio
-* **Riesgo de Liquidez:** La ausencia de alertas de vencimiento incrementa la probabilidad de morosidad, afectando el capital de trabajo.
-* **Dependencia de Personas:** La operatividad del cierre contable depende de personal específico, creando un riesgo de continuidad si estos actores no están disponibles.
-
-### B. Riesgos de Procesos
-* **Errores de Transcripción:** La digitación manual entre sistemas aumenta el riesgo de inconsistencias en los montos facturados y recaudados.
-* **Falta de Trazabilidad:** El uso de archivos planos impide auditar quién realizó cambios en los saldos o aplicó pagos parciales negociados.
-
-### C. Riesgos de Datos
-* **Silos de Información:** La falta de integración impide una visión 360° del rendimiento financiero de la IPS.
-* **Baja Integridad:** Excel no garantiza la persistencia de datos a largo plazo frente a errores de fórmulas o corrupción de archivos.
-
-### D. Riesgos de Seguridad e Infraestructura
-* **Punto Único de Falla (SPOF):** La pérdida de acceso a la cuenta de Drive o el fallo del computador principal paraliza la gestión financiera.
-* **Incumplimiento Normativo:** Dificultad para cumplir rigurosamente con la Ley 1581 (Habeas Data) debido a la falta de logs de acceso y cifrado de datos contables sensibles.
+| Dominio | Riesgo Identificado | Descripción Concisa | Impacto | Probabilidad |
+| :--- | :--- | :--- | :--- | :--- |
+| **Negocio** | **Riesgo de Liquidez** | Falta de alertas de vencimiento que incrementa la morosidad y afecta el capital de trabajo. | **Crítico** | **Alta** |
+| **Negocio** | **Dependencia de Personas** | Operatividad contable supeditada al conocimiento de un único actor clave (Administradora). | **Alto** | **Media** |
+| **Procesos** | **Errores de Transcripción** | Digitación manual de datos desde BIOFILE y SISEC a Excel, propensa a fallos humanos. | **Alto** | **Alta** |
+| **Procesos** | **Falta de Trazabilidad** | Uso de Gmail y archivos planos que impide auditar cambios en saldos o negociaciones. | **Alto** | **Alta** |
+| **Datos** | **Silos de Información** | Desconexión total entre el área de Salud Ocupacional y el CRC, limitando la visión 360°. | **Medio** | **Alta** |
+| **Datos** | **Baja Integridad** | Hojas de Excel vulnerables a errores de fórmulas, duplicidad y corrupción de archivos. | **Alto** | **Media** |
+| **Aplicaciones** | **Alta Deuda Técnica** | Uso de herramientas ofimáticas básicas para procesos financieros complejos y crecientes. | **Medio** | **Alta** |
+| **Infraestructura** | **Punto Único de Falla** | Dependencia de un computador físico y conexión a internet para acceder a la nube. | **Crítico** | **Media** |
+| **Seguridad** | **Accesos Inseguros** | Control de acceso básico en Drive sin un modelo formal de roles ni auditoría. | **Alto** | **Alta** |
+| **Gobierno TI** | **Falta de Estándares** | Decisiones arquitectónicas no documentadas y procesos basados en prácticas informales. | **Bajo** | **Media** |
 
 ---
 
@@ -50,16 +45,16 @@ La solución propuesta evoluciona hacia una **Arquitectura Centralizada y Escala
 * **Capa de Presentación:** Dashboards interactivos con indicadores históricos y gráficos de rendimiento para el apoyo a la toma de decisiones gerenciales.
 
 ---
+### 4. Matriz de Mitigación (Arquitectura TO-BE)
 
-## 4. Matriz de Mitigación
-
-| Riesgo Identificado | Mitigación Arquitectónica (TO-BE) | Mejora Obtenida |
+| Riesgo Identificado | Mitigación Arquitectónica (TO-BE) | Mejora Detallada Obtenida |
 | :--- | :--- | :--- |
-| **Errores de digitación manual** | Carga masiva de datos estructurados | **Integridad:** Eliminación del error humano en la captura. |
-| **Morosidad no detectada** | Módulo de alertas internas automáticas | **Eficiencia:** Mejora inmediata en el recaudo de cartera. |
-| **Acceso inseguro / Falta de logs** | Gestión de Identidades (IAM) y Audit Logs | **Seguridad:** Trazabilidad total de cada ajuste financiero. |
-| **Decisiones sin datos** | Dashboard de Inteligencia de Negocio | **Estratégica:** Visibilidad histórica y proyecciones reales. |
+| **Errores de digitación manual** | **Carga Masiva y API de Ingesta:** Implementación de un componente que procesa reportes estructurados de BIOFILE y SISEC. | **Integridad de Datos:** Eliminación total del error humano en el traspaso de información y garantía de consistencia financiera. |
+| **Morosidad no detectada** | **Motor de Reglas y Alertas Automáticas:** Sistema que monitorea el límite de 3 meses y notifica preventivamente al equipo administrativo. | **Optimización de Recaudo:** Reducción proactiva de la cartera morosa y fortalecimiento del flujo de caja corporativo. |
+| **Acceso inseguro / Falta de logs** | **Servicio de Identidad (IAM) y Audit Logs:** Control de acceso por roles (Admin/Analista) y registro histórico de toda actividad. | **Seguridad y Cumplimiento:** Trazabilidad absoluta de cambios en saldos y cumplimiento estricto de la Ley 1581 (Protección de Datos). |
+| **Silos de información** | **Capa de Datos Centralizada (Financial_DB):** Unificación de los ingresos/egresos de Salud Ocupacional y CRC en un repositorio relacional. | **Visión 360° del Negocio:** Eliminación de la fragmentación de datos, permitiendo una visión financiera integral de la IPS. |
+| **Decisiones sin datos** | **Dashboard de Reporting Service:** Generación automática de gráficos de rendimiento e indicadores históricos. | **Inteligencia de Negocio:** Toma de decisiones basada en evidencia y proyecciones reales en lugar de procesos manuales reactivos. |
+| **Punto único de falla (SPOF)** | **Infraestructura Cloud Redundante:** Migración del almacenamiento de archivos locales a una base de datos distribuida con respaldos automáticos. | **Continuidad del Negocio:** Garantía de disponibilidad del sistema contable independientemente de fallos en dispositivos físicos locales. |
 
----
 
 > **Conclusión:** La transición al modelo TO-BE permite a **ACR VITAL LABORAL SAS** transformar su gestión financiera de un proceso manual propenso al riesgo en una operación estratégica, segura y alineada con los objetivos de crecimiento de la IPS.
